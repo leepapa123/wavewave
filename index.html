@@ -19,6 +19,7 @@
         <video id="vid4" src="./assets/video04.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
         <video id="vid5" src="./assets/video05.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
         <video id="vid6" src="./assets/video06.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <video id="vid7" src="./assets/video07.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
       </a-assets>
 
       <!-- Marker 1 -->
@@ -95,6 +96,18 @@
 
       <a-entity camera></a-entity>
     </a-scene>
+
+     <!-- Marker 7 -->
+      <a-marker id="marker7" type="pattern" url="assets/m07.patt">
+        <a-plane
+          id="plane7"
+          src="#vid7"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
 
     <script>
       const videos = [];
