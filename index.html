@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    >
+      <a-assets>
+        <video id="vid1" src="./assets/video01.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <video id="vid2" src="./assets/video02.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <video id="vid3" src="./assets/video03.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <video id="vid4" src="./assets/video04.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <video id="vid5" src="./assets/video05.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+        <video id="vid6" src="./assets/video06.mp4" preload="auto" loop muted playsinline webkit-playsinline crossorigin="anonymous"></video>
+      </a-assets>
+
+      <!-- Marker 1 -->
+      <a-marker id="marker1" type="pattern" url="assets/m01.patt">
+        <a-plane
+          id="plane1"
+          src="#vid1"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
+
+      <!-- Marker 2 -->
+      <a-marker id="marker2" type="pattern" url="assets/m02.patt">
+        <a-plane
+          id="plane2"
+          src="#vid2"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
+
+      <!-- Marker 3 -->
+      <a-marker id="marker3" type="pattern" url="assets/m03.patt">
+        <a-plane
+          id="plane3"
+          src="#vid3"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
+
+      <!-- Marker 4 -->
+      <a-marker id="marker4" type="pattern" url="assets/m04.patt">
+        <a-plane
+          id="plane4"
+          src="#vid4"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
+
+      <!-- Marker 5 -->
+      <a-marker id="marker5" type="pattern" url="assets/m05.patt">
+        <a-plane
+          id="plane5"
+          src="#vid5"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
+
+      <!-- Marker 6 -->
+      <a-marker id="marker6" type="pattern" url="assets/m06.patt">
+        <a-plane
+          id="plane6"
+          src="#vid6"
+          width="2"
+          height="1.125"
+          rotation="-90 0 0"
+          visible="true"
+        ></a-plane>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      const videos = [];
+      for (let i = 1; i <= 6; i++) {
+        const vid = document.querySelector(`#vid${i}`);
+        const marker = document.querySelector(`#marker${i}`);
+        videos.push(vid);
+
+        marker.addEventListener("markerFound", () => {
+          vid.muted = true;
+          vid.play().catch(() => {});
+          console.log("play", i);
+        });
+
+        marker.addEventListener("markerLost", () => {
+          vid.pause();
+          console.log("pause", i);
+        });
+      }
+
+      document.body.addEventListener("touchstart", () => {
+        videos.forEach(v => {
+          v.muted = true;
+          v.play().then(() => v.pause());
+        });
+        console.log("start");
+      }, { once: true });
+    </script>
+  </body>
+</html>
